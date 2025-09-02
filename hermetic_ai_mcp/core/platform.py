@@ -15,6 +15,9 @@ import logging
 from .sequential_thinking import SequentialThinkingEngine
 from .lsp_integration import LSPClient, CodeIntelligence, Language
 
+# Disable logging for MCP compatibility
+if not os.environ.get('DEBUG_MCP'):
+    logging.disable(logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 
@@ -260,7 +263,7 @@ class HermeticAIPlatform:
         self.session_id: Optional[str] = None
         self.session_start: Optional[datetime] = None
         
-        logger.info("Hermetic AI Platform initialized")
+        pass  # Platform initialized
     
     def on_session_start(self, cwd: str = None) -> str:
         """
@@ -278,17 +281,17 @@ class HermeticAIPlatform:
         ).hexdigest()[:16]
         self.session_start = datetime.now()
         
-        logger.info(f"Session started: {self.session_id}")
+        pass  # Session started
         
         # Auto-detect project if enabled
         if self.auto_detect and cwd:
             self.current_project = self.project_detector.detect_project(cwd)
             
             if self.current_project.is_new:
-                logger.info(f"New project detected: {self.current_project.project_type}")
+                pass  # New project detected
                 # Could trigger setup wizard here
             else:
-                logger.info(f"Existing project loaded: {self.current_project.project_hash}")
+                pass  # Existing project loaded
             
             # Initialize LSP for the project
             self.lsp_client = LSPClient(self.current_project.project_path)
@@ -322,7 +325,7 @@ class HermeticAIPlatform:
             limit=20
         )
         
-        logger.info(f"Loaded {len(recent_memories)} memories for project: {self.current_project.project_hash}")
+        pass  # Memories loaded
         
         # Attach memory system to other components
         if self.sequential_thinking:
@@ -410,7 +413,7 @@ class HermeticAIPlatform:
             module: Module instance
         """
         self.modules[name] = module
-        logger.info(f"Module registered: {name}")
+        pass  # Module registered
         
         # Register module tools
         if hasattr(module, 'get_tools'):
@@ -427,7 +430,7 @@ class HermeticAIPlatform:
             handler: Tool handler function
         """
         self.tools[name] = handler
-        logger.info(f"Tool registered: {name}")
+        pass  # Tool registered
     
     def get_platform_status(self) -> Dict[str, Any]:
         """Get current platform status"""
@@ -453,7 +456,7 @@ class HermeticAIPlatform:
     
     async def shutdown(self):
         """Shutdown the platform cleanly"""
-        logger.info("Shutting down Hermetic AI Platform")
+        pass  # Shutting down
         
         # Shutdown LSP servers
         if self.lsp_client:
@@ -475,4 +478,4 @@ class HermeticAIPlatform:
             with open(session_file, 'w') as f:
                 json.dump(session_data, f, indent=2)
         
-        logger.info("Platform shutdown complete")
+        pass  # Shutdown complete
