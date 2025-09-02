@@ -281,7 +281,7 @@ class HermeticMCPServer:
                 if not self.platform:
                     # Initialize platform on first tool call
                     self.platform = HermeticAIPlatform(auto_detect=True)
-                    self.verifier = CodeVerifier(memory_system=self.platform.memory_system)
+                    self.verifier = CodeVerifier(memory_system=self.platform.memory_system if self.platform else None)
                     
                     # Auto-detect project if in a project directory
                     cwd = os.getcwd()

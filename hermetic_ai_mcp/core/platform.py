@@ -250,7 +250,9 @@ class HermeticAIPlatform:
         # Initialize core components
         self.project_detector = ProjectDetector(str(self.base_dir))
         self.current_project: Optional[ProjectContext] = None
-        self.memory_system = None  # Will be initialized later
+        # Initialize memory system with base directory
+        from .memory_system import DualLayerMemorySystem
+        self.memory_system = DualLayerMemorySystem(str(self.base_dir / "memory"))
         self.sequential_thinking = SequentialThinkingEngine()
         self.lsp_client: Optional[LSPClient] = None
         self.code_intelligence: Optional[CodeIntelligence] = None

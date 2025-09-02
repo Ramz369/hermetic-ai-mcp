@@ -59,7 +59,7 @@ class MemoryEntry:
             ).hexdigest()[:16]
 
 
-class DualLayerMemory:
+class DualLayerMemorySystem:
     """
     Dual-layer memory system with universal and project-specific storage
     """
